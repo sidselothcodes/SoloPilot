@@ -1,0 +1,32 @@
+/*
+ * Global styles.
+ * Loads Tailwind layers and defines the step fade/translate transition
+ * driven by the isTransitioning state in useEstimator.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* Step fade-out state: matches the 200ms timeout in useEstimator. */
+.step-transition {
+  transition:
+    opacity 200ms ease-in-out,
+    transform 200ms ease-in-out;
+}
+
+.step-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step-hidden {
+  opacity: 0;
+  transform: translateY(-8px);
+}
