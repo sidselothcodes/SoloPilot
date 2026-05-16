@@ -15,6 +15,7 @@ export type BusinessType =
 export type BusinessStructure = "sole_prop" | "llc" | "s_corp";
 
 export interface ExpenseBreakdown {
+  [key: string]: number;
   homeOffice: number;
   software: number;
   equipment: number;
