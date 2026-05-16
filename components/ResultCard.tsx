@@ -14,6 +14,9 @@ interface ResultCardProps {
 }
 
 export default function ResultCard({ result }: ResultCardProps) {
+  const sCorpNotRecommended =
+    result.potentialSavings.label === "S-Corp not recommended yet";
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-8 rounded-2xl border border-border bg-panel p-8 shadow-card">
@@ -25,9 +28,13 @@ export default function ResultCard({ result }: ResultCardProps) {
 
         <Section
           label={result.potentialSavings.label}
-          amount={formatCurrency(result.potentialSavings.amount)}
+          amount={
+            sCorpNotRecommended
+              ? undefined
+              : formatCurrency(result.potentialSavings.amount)
+          }
           subtext={result.potentialSavings.explanation}
-          amountAccent
+          amountAccent={!sCorpNotRecommended}
         />
 
         <DeductionsSection items={result.deductionOpportunities} />
@@ -46,7 +53,7 @@ function Section({
   amountAccent,
 }: {
   label: string;
-  amount: string;
+  amount?: string;
   subtext: string;
   amountAccent?: boolean;
 }) {
@@ -55,13 +62,15 @@ function Section({
       <div className="text-xs font-semibold uppercase tracking-wider text-textSecondary">
         {label}
       </div>
-      <div
-        className={`text-4xl font-bold ${
-          amountAccent ? "text-accent" : "text-textPrimary"
-        }`}
-      >
-        {amount}
-      </div>
+      {amount !== undefined && (
+        <div
+          className={`text-4xl font-bold ${
+            amountAccent ? "text-accent" : "text-textPrimary"
+          }`}
+        >
+          {amount}
+        </div>
+      )}
       <p className="text-sm leading-relaxed text-textSecondary">{subtext}</p>
     </div>
   );
